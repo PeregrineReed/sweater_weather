@@ -15,8 +15,8 @@ describe 'Geocode Service' do
       it 'returns the lat and long of the coordinates' do
         expect(@service.coordinates)
           .to eq({
-            lat: 39.7505744,
-            lng: -104.9968748
+            lat: 39.7507834,
+            lng: -104.9964355
           })
       end
     end
