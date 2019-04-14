@@ -12,7 +12,9 @@ describe 'Geocode Service' do
 
   describe 'instance methods' do
     describe '#conn' do
-      expect(@service.conn).to be_a(Faraday::Connection)
+      it 'has a faraday connection' do
+        expect(@service.conn).to be_a(Faraday::Connection)
+      end
     end
 
     describe '#coordinates' do
