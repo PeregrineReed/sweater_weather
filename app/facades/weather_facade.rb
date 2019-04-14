@@ -9,7 +9,7 @@ class WeatherFacade
   end
 
   def forecast
-    Forecast.new(weather_service.forecast)
+    Forecast.new(geocode_service.address, weather_service.forecast)
   end
 
   def geocode_service
