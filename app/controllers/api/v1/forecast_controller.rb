@@ -1,8 +1,6 @@
 class Api::V1::ForecastController < ApplicationController
   def index
-    location = GeocodeService.new(params[:location])
-    coordinates = location.coordinates
-    weather = WeatherService.new(coordinates)
-    json render: weather.forecast
+    weather = WeatherFacade.new(params[:location])
+    render json: weather.forecast
   end
 end
