@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Forecast API' do
   it 'returns daily forecast' do
 
-    get '/api/v1/forecast?location=1331+17th+Street+Denver,+CO'
+    get '/api/v1/forecast?location=1331+17th+Street,+Denver,+CO'
 
     forecast = JSON.parse(response.body)
     forecast_daily = forecast[:today][:forecast].keys
