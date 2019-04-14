@@ -11,6 +11,10 @@ describe 'Geocode Service' do
   end
 
   describe 'instance methods' do
+    describe '#conn' do
+      expect(@service.conn).to be_a(Faraday::Connection)
+    end
+
     describe '#coordinates' do
       it 'returns the lat and long of the coordinates' do
         expect(@service.coordinates)
