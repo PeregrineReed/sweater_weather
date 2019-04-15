@@ -8,8 +8,12 @@ class WeatherFacade
     lat_long.values.join(',')
   end
 
+  def city
+    City.new(geocode_service.address)
+  end
+
   def forecast
-    Forecast.new(geocode_service.address, weather_service.forecast)
+    Forecast.new(city, weather_service.forecast)
   end
 
   def geocode_service
@@ -17,6 +21,6 @@ class WeatherFacade
   end
 
   def weather_service
-    WeatherService.new(coordinates)
+    WeatherService.new(city.latitude, city.longitude)
   end
 end

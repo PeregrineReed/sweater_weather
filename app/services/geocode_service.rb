@@ -9,9 +9,7 @@ class GeocodeService
   end
 
   def address
-    results = json_for("?address=#{@address}")
-    results[:results][0][:formatted_address]
-      .split(', ')
+    json_for("?address=#{@address}")
   end
 
   def json_for(url)

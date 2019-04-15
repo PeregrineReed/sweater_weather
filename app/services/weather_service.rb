@@ -1,10 +1,11 @@
 class WeatherService
-  def initialize(coordinates)
-    @coordinates = coordinates
+  def initialize(latitude, longitude)
+    @latitude = latitude
+    @longitude = longitude
   end
 
   def forecast
-    json_for("#{ENV['DARK_SKY_KEY']}/#{@coordinates}")
+    json_for("#{ENV['DARK_SKY_KEY']}/#{@latitude},#{@longitude}")
   end
 
   def json_for(url)
