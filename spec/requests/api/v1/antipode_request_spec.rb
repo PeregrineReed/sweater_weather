@@ -7,12 +7,12 @@ describe 'Antipode API' do
 
     antipode = JSON.parse(response.body, symbolize_names: true)
 
-    antipode_keys = [:id, :type, :attributes, :search_location]
-    attribute_keys = [:location_name, :forecast]
+    antipode_keys = [:id, :type, :attributes]
+    attribute_keys = [:location_name, :search_location, :forecast]
     forecast_keys = [:summary, :current_temperature]
 
-    expect(antipode.keys).to eq(antipode_keys)
-    expect(antipode[:attributes].keys).to eq(attribute_keys)
-    expect(antipode[:attributes][:forecast].keys).to eq(forecast_keys)
+    expect(antipode[:data].keys).to eq(antipode_keys)
+    expect(antipode[:data][:attributes].keys).to eq(attribute_keys)
+    expect(antipode[:data][:attributes][:forecast].keys).to eq(forecast_keys)
   end
 end
