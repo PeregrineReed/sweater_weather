@@ -13,9 +13,11 @@ describe 'Antipode' do
         }
       }
     }
-    @file = File.read('./fixtures/antipode.json')
-    @data = JSON.parse(@file, symbolize_names: true)
-    @antipode = Antipode.new(@location,@data)
+    @file1 = File.read('./fixtures/antipode.json')
+    @file2 = File.read('./fixtures/weather.json')
+    @data = JSON.parse(@file1, symbolize_names: true)
+    @weather = JSON.parse(@file2, symbolize_names: true)
+    @antipode = Antipode.new(@location, @coordinates, @data, @weather)
   end
   it 'exists' do
     expect(@antipode).to be_a(Antipode)
@@ -27,7 +29,7 @@ describe 'Antipode' do
     end
 
     it 'type' do
-      expect(@antipode.id).to eq('antipode')
+      expect(@antipode.type).to eq('antipode')
     end
 
     it 'location_name' do
@@ -36,8 +38,8 @@ describe 'Antipode' do
 
     it 'forecast' do
       expect(@antipode.forecast).to eq({
-        summary: "Mostly Cloudy",
-        current_temperature: 72,
+        summary: "Partly Cloudy",
+        current_temperature: 64.13,
     	})
     end
 

@@ -5,7 +5,7 @@ describe 'Antipode API' do
 
     get '/api/v1/antipode?loc=hongkong'
 
-    anitpode = JSON.parse(response.body, symbolize_names: true)
+    antipode = JSON.parse(response.body, symbolize_names: true)
 
     antipode_keys = [:id, :type, :attributes, :search_location]
     attribute_keys = [:location_name, :forecast]

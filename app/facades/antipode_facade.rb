@@ -8,7 +8,7 @@ class AntipodeFacade
       service.location,
       service.antipode_coordinates,
       service.antipode,
-      forecast.forecast
+      forecast
     )
   end
 
@@ -18,6 +18,6 @@ class AntipodeFacade
 
   def forecast
     coordinates = service.antipode_coordinates[:data][:attributes].values
-    WeatherService.new(coordinates[0], coordinates[1])
+    WeatherService.new(coordinates[0], coordinates[1]).forecast
   end
 end
