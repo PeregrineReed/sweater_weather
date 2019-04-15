@@ -2,9 +2,12 @@ require 'rails_helper'
 
 describe 'Forecast' do
   before :each do
-    @address = ['Denver', 'CO', 'USA']
-    @weather = File.open('./fixtures/weather.json')
-    @forecast = Forecast.new(@address, @weather)
+    @json_city = File.read('./fixtures/place.json')
+    @place = JSON.parse(@json_city, symbolize_names: true)
+    @city = City.new(@place)
+    @json_weather = File.read('./fixtures/weather.json')
+    @weather = JSON.parse(@json_weather, symbolize_names: true)
+    @forecast = Forecast.new(@city, @weather)
   end
 
   it 'exists' do
@@ -21,19 +24,15 @@ describe 'Forecast' do
     end
 
     it '#country' do
-      expect(@forecast.country).to eq('USA')
+      expect(@forecast.country).to eq('US')
     end
 
-    it '#hour' do
-      expect(@forecast.hour).to eq(14)
+    it '#timezone' do
+      expect(@forecast.timezone).to eq('America/Denver')
     end
 
-    it '#minute' do
-      expect(@forecast.minute).to eq(29)
-    end
-
-    it '#date' do
-      expect(@forecast.date).to eq('4/14/2019')
+    it '#time' do
+      expect(@forecast.time).to eq(1555273799)
     end
 
     it '#icon' do
@@ -53,29 +52,41 @@ describe 'Forecast' do
     end
 
     it '#visibility' do
-      expect(@forecast.current).to eq(3.37)
+      expect(@forecast.visibility).to eq(3.37)
     end
 
     it '#uv_index' do
-      expect(@forecast.current).to eq(5)
+      expect(@forecast.uv_index).to eq(5)
+    end
+
+    it '#cloud_cover' do
+      expect(@forecast.cloud_cover).to eq(0.44)
     end
 
     it '#summary' do
-      expect(@forecast.current).to eq('Partly Cloudy')
+      expect(@forecast.summary).to eq('Partly Cloudy')
     end
 
     it '#hourly' do
       hourly = @forecast.hourly.all? do |h|
         h.class == Hour
       end
-      expect(@forecast.hourly).to be_a()
+      expect(hourly).to eq(true)
     end
 
     it '#daily' do
       daily = @forecast.daily.all? do |d|
         d.class == Day
       end
-      expect(daily).to be_a(true)
+      expect(daily).to eq(true)
+    end
+
+    it '#high' do
+      expect(@forecast.high).to eq(66.43)
+    end
+
+    it '#low' do
+      expect(@forecast.low).to eq(33.77)
     end
   end
 end
