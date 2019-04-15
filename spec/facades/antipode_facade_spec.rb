@@ -15,5 +15,12 @@ describe 'AntipodeFacade' do
         expect(@facade.antipode).to be_a(Antipode)
       end
     end
+
+    describe 'forecast' do
+      it 'returns a hash of forecast data' do
+        expect(@facade.forecast).to be_a(Hash)
+        expect(@facade.forecast.keys.include?(:currently)).to eq(true)
+      end
+    end
   end
 end

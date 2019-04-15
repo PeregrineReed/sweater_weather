@@ -21,13 +21,13 @@ describe 'AntipodeService' do
       end
     end
 
-    describe '#location_coordinates' do
+    describe '#coordinates' do
       it 'returns lat and long for location' do
         lat_long = {
           lat: 22.3193039,
           lng: 114.1693611
         }
-        expect(@service.location_coordinates).to eq(lat_long)
+        expect(@service.coordinates).to eq(lat_long)
       end
     end
 
@@ -37,6 +37,12 @@ describe 'AntipodeService' do
         json = JSON.parse(file, symbolize_names: true)
 
         expect(@service.antipode).to eq(json)
+      end
+    end
+
+    describe '#location' do
+      it 'returns formatted location' do
+        expect(@service.location).to eq("Hong Kong")
       end
     end
   end
