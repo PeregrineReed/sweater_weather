@@ -4,10 +4,20 @@ class AntipodeFacade
   end
 
   def antipode
-    Antipode.new(service.antipode)
+    Antipode.new(
+      service.location,
+      service.antipode_coordinates,
+      service.antipode,
+      forecast.forecast
+    )
   end
 
   def service
     AntipodeService.new(@location)
+  end
+
+  def forecast
+    coordinates = service.antipode_coordinates[:data][:attributes].values
+    WeatherService.new(coordinates[0], coordinates[1])
   end
 end

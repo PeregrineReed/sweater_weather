@@ -1,4 +1,6 @@
 class AntipodeService
+  attr_reader :location
+
   def initialize(location)
     @location = location
     @lat = location_coordinates[:lat]
@@ -7,6 +9,7 @@ class AntipodeService
 
   def location_coordinates
     results ||= json_for_location("?address=#{@location}")
+    @location = results[:results][0][:address_components][0][:long_name]
     results[:results][0][:geometry][:location]
   end
 
