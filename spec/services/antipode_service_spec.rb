@@ -30,5 +30,14 @@ describe 'AntipodeService' do
         expect(@service.location_coordinates).to eq(lat_long)
       end
     end
+
+    describe '#antipode' do
+      it 'returns antipode info' do
+        file = File.read('./fixtures/antipode.json')
+        json = JSON.parse(file, symbolize_names: true)
+
+        expect(@service.antipode).to eq(json)
+      end
+    end
   end
 end

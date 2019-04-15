@@ -10,6 +10,11 @@ class AntipodeService
     results[:results][0][:geometry][:location]
   end
 
+  def antipode
+    lat_lng = antipode_coordinates[:data][:attributes].values.join(',')
+    json_for_location("?latlng=#{lat_lng}")
+  end
+
   def antipode_coordinates
     json_for_antipode("?lat=#{@lat}&long=#{@lng}")
   end
