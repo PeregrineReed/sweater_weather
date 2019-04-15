@@ -5,45 +5,47 @@ describe 'Forecast API' do
 
     get '/api/v1/forecast?location=1331+17th+Street,+Denver,+CO'
 
-    forecast = JSON.parse(response.body)
-    forecast_daily = forecast[:today][:forecast].keys
+    forecast = JSON.parse(response.body, symbolize_names: true)
+    forecast_today = forecast[:data][:attributes].keys
 
-    expect(forecast_daily).to have_content('city')
-    expect(forecast_daily).to have_content('state')
-    expect(forecast_daily).to have_content('time')
-    expect(forecast_daily).to have_content('date')
-    expect(forecast_daily).to have_content('temperature')
-    expect(forecast_daily).to have_content('cloud_cover')
-    expect(forecast[:today][:forecast][:temperature].keys).to eq('fahrenheit')
-    expect(forecast[:today][:forecast][:temperature].keys).to eq('high')
-    expect(forecast[:today][:forecast][:temperature].keys).to eq('low')
-
-    forecast_details = forecast[:details].keys
-    expect(forecast_details).to have_content('today')
-    expect(forecast_details).to have_content('tonight')
-    expect(forecast_details).to have_content('feels_like')
-    expect(forecast_details).to have_content('humidity')
-    expect(forecast_details).to have_content('visibility')
-    expect(forecast_details).to have_content('uv_index')
-    expect(forecast_details).to have_content('cloud_cover')
+    expect(forecast_today.include?(:id)).to eq(true)
+    expect(forecast_today.include?(:city)).to eq(true)
+    expect(forecast_today.include?(:state)).to eq(true)
+    expect(forecast_today.include?(:country)).to eq(true)
+    expect(forecast_today.include?(:timezone)).to eq(true)
+    expect(forecast_today.include?(:time)).to eq(true)
+    expect(forecast_today.include?(:icon)).to eq(true)
+    expect(forecast_today.include?(:summary)).to eq(true)
+    expect(forecast_today.include?(:temperature)).to eq(true)
+    expect(forecast_today.include?(:feels_like)).to eq(true)
+    expect(forecast_today.include?(:humidity)).to eq(true)
+    expect(forecast_today.include?(:visibility)).to eq(true)
+    expect(forecast_today.include?(:uv_index)).to eq(true)
+    expect(forecast_today.include?(:cloud_cover)).to eq(true)
+    expect(forecast_today.include?(:hourly)).to eq(true)
+    expect(forecast_today.include?(:daily)).to eq(true)
   end
 
-  it 'returns 5 day forecast' do
+  it 'returns extended forecast' do
 
     get '/api/v1/forecast?location=1331+17th+Street+Denver,+CO'
 
-    forecast = JSON.parse(response.body)
-    forecast_extended = forecast[:extended][:forecast]
-    forecast_hourly = forecast_extended[:hourly]
+    forecast = JSON.parse(response.body, symbolize_names: true)
+    hourly_keys = forecast[:data][:attributes][:hourly][0].keys
+    daily_keys = forecast[:data][:attributes][:daily][0].keys
 
-    expect(forecast_extended.keys).to have_content('hourly')
-    expect(forecast_hourly.keys).to have_content('hour')
-    expect(forecast_hourly.keys).to have_content('temperature')
-    expect(forecast_hourly[:temperature].keys).to have_content('fahrenheit')
-    expect(forecast_extended.keys).to have_content('weekly')
-    expect(forecast_extended[:weekly].keys).to have_content('cloud_cover')
-    expect(forecast_extended[:weekly].keys).to have_content('precipitation')
-    expect(forecast_extended[:weekly].keys).to have_content('high')
-    expect(forecast_extended[:weekly].keys).to have_content('low')
+    expect(hourly_keys.include?(:id)).to eq(true)
+    expect(hourly_keys.include?(:time)).to eq(true)
+    expect(hourly_keys.include?(:temperature)).to eq(true)
+    expect(hourly_keys.include?(:icon)).to eq(true)
+    expect(hourly_keys.include?(:summary)).to eq(true)
+    expect(daily_keys.include?(:id)).to eq(true)
+    expect(daily_keys.include?(:time)).to eq(true)
+    expect(daily_keys.include?(:high)).to eq(true)
+    expect(daily_keys.include?(:low)).to eq(true)
+    expect(daily_keys.include?(:icon)).to eq(true)
+    expect(daily_keys.include?(:summary)).to eq(true)
+    expect(daily_keys.include?(:precip_percent)).to eq(true)
+    expect(daily_keys.include?(:precip_type)).to eq(true)
   end
 end

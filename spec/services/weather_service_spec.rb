@@ -2,8 +2,9 @@ require 'rails_helper'
 
 describe 'WeatherService' do
   before :each do
-    @coordinates = '39.7507834,-104.9964355'
-    @service = WeatherService.new(@coordinates)
+    @latitude = 39.7507834
+    @longitude = -104.9964355
+    @service = WeatherService.new(@latitude, @longitude)
   end
 
   it 'exists' do
