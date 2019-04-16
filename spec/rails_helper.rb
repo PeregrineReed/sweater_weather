@@ -5,6 +5,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 require 'pry'
 require 'simplecov'
+require './spec/support/factory_bot'
 # Add additional requires below this line. Rails is not loaded until this point!
 SimpleCov.start 'rails'
 
