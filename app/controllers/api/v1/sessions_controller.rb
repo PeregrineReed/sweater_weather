@@ -4,7 +4,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
     if user && user.authenticate(session_params[:password])
       render status: 200, json: { api_key: user.api_key }
     else
-      render status: 401, json: invalid_error
+      head 401
     end
   end
 
