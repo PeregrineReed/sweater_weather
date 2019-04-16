@@ -32,11 +32,13 @@ describe 'Favorites API' do
     results = JSON.parse(response.body, symbolize_names: true)
     favorites_keys = [:id, :type, :attributes]
     attribute_keys = [:cities]
-    city_keys = [:id, :name, :state, :country, :place_id, :latitude, :longitude]
+    city_keys = [:location, :current_weather]
+    forecast_keys = [:timezone, :time, :icon, :summary, :temperature, :feels_like, :humidity, :visibility, :uv_index, :cloud_cover, :high, :low]
     expect(results[:data][:type]).to eq("favorites")
     expect(results[:data].keys).to eq(favorites_keys)
     expect(results[:data][:attributes].keys).to eq(attribute_keys)
     expect(results[:data][:attributes][:cities][0].keys).to eq(city_keys)
+    expect(results[:data][:attributes][:cities][0][:current_weather].keys).to eq(forecast_keys)
   end
 
   it 'user can delete a favorited city' do
@@ -52,20 +54,12 @@ describe 'Favorites API' do
     }
 
     results = JSON.parse(response.body, symbolize_names: true)
-
+    attr_keys = [:location, :current_weather]
+    weather_keys = [:timezone, :time, :icon, :summary, :temperature, :feels_like, :humidity, :visibility, :uv_index, :cloud_cover, :high, :low]
     expect(user.cities.count).to eq(2)
-    expect(results[:data]).to eq({
-      id: 'x',
-      type: 'city',
-      attributes: {
-        id: city.id,
-        name: city.name,
-        state: city.state,
-        country: city.country,
-        place_id: city.place_id,
-        latitude: city.latitude,
-        longitude: city.longitude
-      }
-    })
+    expect(results[:data].keys).to eq([:id, :type, :attributes])
+    expect(results[:data][:attributes].keys).to eq(attr_keys)
+    expect(results[:data][:attributes][:current_weather].keys).to eq(weather_keys)
+
   end
 end
