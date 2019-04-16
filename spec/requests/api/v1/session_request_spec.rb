@@ -27,10 +27,7 @@ describe 'Session API' do
     }
 
     post '/api/v1/sessions', params: { session: credentials }
-    results = JSON.parse(response.body, symbolize_names: true)
 
-    expect(results).to eq({
-      error: "Invalid email or password."
-      })
+    expect(response.status).to eq(401)
   end
 end

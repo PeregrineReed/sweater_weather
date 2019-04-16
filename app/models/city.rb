@@ -1,19 +1,29 @@
-class City
-  attr_reader :name,
-              :state,
-              :country,
-              :id,
-              :latitude,
-              :longitude
+class City < ApplicationRecord
+  validates_presence_of :name
+  validates_presence_of :state
+  validates_presence_of :country
+  validates_presence_of :latitude
+  validates_presence_of :longitude
+  validates :place_id, uniqueness: true, presence: true
 
-  def initialize(data)
-    titles = data[:results][0][:address_components]
-    @name = titles[0][:long_name]
-    @state = titles[2][:short_name]
-    @country = titles[3][:short_name]
-    @id = data[:results][0][:place_id]
-    coordinates = data[:results][0][:geometry][:location]
-    @latitude = coordinates[:lat]
-    @longitude = coordinates[:lng]
+  has_many :user_cities
+  has_many :users, through: :user_cities
+
+  def self.find_or_create_from_geocode(location)
+    attributes = service(location).city_attributes
+    City.create(attributes) unless City.find_by(attributes)
+    City.last
+  end
+
+  def self.service(location)
+    GeocodeService.new(location)
+  end
+
+  def forecast
+    Forecast.new(self, service.forecast)
+  end
+
+  def service
+    WeatherService.new(latitude, longitude)
   end
 end

@@ -15,6 +15,6 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def error
-    render status: 409, json: save_error
+    head 409
   end
 end

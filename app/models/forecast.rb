@@ -14,7 +14,9 @@ class Forecast
               :uv_index,
               :cloud_cover,
               :hourly,
-              :daily
+              :daily,
+              :high,
+              :low
 
   def initialize(city, forecast)
     @id = city.id
@@ -37,14 +39,8 @@ class Forecast
     @daily = forecast[:daily][:data].map do |day|
       Day.new(@id, day)
     end
-  end
-
-  def high
-    @daily[0].high
-  end
-
-  def low
-    @daily[0].low
+    @high = @daily[0].high
+    @low = @daily[0].low
   end
 
 end
