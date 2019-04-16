@@ -12,5 +12,4 @@ describe 'Background API' do
     expect(background[:data].keys).to eq(background_keys)
     expect(background[:data][:attributes].keys).to eq(attribute_keys)
   end
-
 end
