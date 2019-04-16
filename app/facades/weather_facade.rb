@@ -9,7 +9,7 @@ class WeatherFacade
   end
 
   def city
-    City.new(geocode_service.address)
+    City.create_from_hash(geocode_service.address)
   end
 
   def forecast

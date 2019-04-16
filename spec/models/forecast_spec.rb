@@ -4,7 +4,7 @@ describe 'Forecast' do
   before :each do
     @json_city = File.read('./fixtures/place.json')
     @place = JSON.parse(@json_city, symbolize_names: true)
-    @city = City.new(@place)
+    @city = City.create_from_hash(@place)
     @json_weather = File.read('./fixtures/weather.json')
     @weather = JSON.parse(@json_weather, symbolize_names: true)
     @forecast = Forecast.new(@city, @weather)
