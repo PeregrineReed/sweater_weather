@@ -12,7 +12,7 @@ describe 'BackgroundsFacade' do
   describe 'instance methods' do
     describe '#image' do
       it 'returns a picture url from the location' do
-        expect(@facade.location).to be_a(Background)
+        expect(@facade.image).to be_a(Background)
       end
     end
   end
