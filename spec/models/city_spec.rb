@@ -17,10 +17,29 @@ describe City, type: :model do
   end
 
   describe 'Class Methods' do
-    it '::create_from_hash(data)' do
-      file = File.read('./fixtures/place.json')
-      data = JSON.parse(file, symbolize_names: true)
-      expect(City.create_from_hash(data)).to be_a(City)
+    it '::find_or_create_from_geocode(data)' do
+      expect(City.find_or_create_from_geocode('denver,co')).to be_a(City)
+      City.find_or_create_from_geocode('denver,co')
+      City.find_or_create_from_geocode('denver,co')
+      expect(City.count).to eq(1)
+    end
+
+    it '::service' do
+      expect(City.service('denver,co')).to be_a(GeocodeService)
+    end
+  end
+
+  describe 'Instance Methods' do
+    it '#service' do
+      city = create(:city)
+
+      expect(city.service).to be_a(WeatherService)
+    end
+
+    it '::forecast' do
+      city = create(:city)
+
+      expect(city.forecast).to be_a(Forecast)
     end
   end
 end
