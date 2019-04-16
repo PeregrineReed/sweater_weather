@@ -15,4 +15,12 @@ describe City, type: :model do
   describe 'Relationships' do
     it { should have_many :users }
   end
+
+  describe 'Class Methods' do
+    it '::create_from_hash(data)' do
+      file = File.read('./fixtures/place.json')
+      data = JSON.parse(file, symbolize_names: true)
+      expect(City.create_from_hash(data)).to be_a(City)
+    end
+  end
 end
