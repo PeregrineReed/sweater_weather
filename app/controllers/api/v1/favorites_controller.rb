@@ -6,15 +6,24 @@ class Api::V1::FavoritesController < Api::V1::BaseController
     head 201
   end
 
-  def index
+  def show
     user = find_user
-    render json: FavoritesSerializer.new(user)
+    if user
+      render json: FavoritesSerializer.new(user)
+    else
+      head 401
+    end
   end
 
   def destroy
     user = find_user
     city = find_city
-    render json: CitySerializer.new(user.remove_favorite(city))
+    user.remove_favorite(city)
+    if user && city
+      render json: CitySerializer.new(city)
+    else
+      head 401
+    end
   end
 
   private
