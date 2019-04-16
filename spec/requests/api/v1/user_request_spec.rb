@@ -40,16 +40,12 @@ describe 'User API' do
     }
 
     post '/api/v1/users', params: { user: taken_credentials }
-
-    results = JSON.parse(response.body, symbolize_names: true)
-    expect(results).to eq(not_saved)
+    expect(response.status).to eq(409)
 
     post '/api/v1/users', params: { user: invalid_username }
-    results = JSON.parse(response.body, symbolize_names: true)
-    expect(results).to eq(not_saved)
+    expect(response.status).to eq(409)
 
     post '/api/v1/users', params: { user: invalid_password }
-    results = JSON.parse(response.body, symbolize_names: true)
-    expect(results).to eq(not_saved)
+    expect(response.status).to eq(409)
   end
 end
