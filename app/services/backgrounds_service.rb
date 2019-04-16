@@ -4,8 +4,10 @@ class BackgroundsService
   end
 
   def landscape
-    json_for("?query=#{@location}&orientation=landscape")
+    json_for("search/photos?query=#{@location}&orientation=landscape")
   end
+
+  private
 
   def json_for(url)
     response = conn.get(url)
@@ -13,7 +15,7 @@ class BackgroundsService
   end
 
   def conn
-    Faraday.new(url: 'https://api.unsplash.com/search/photos') do |f|
+    Faraday.new(url: 'https://api.unsplash.com/') do |f|
       f.headers['Authorization'] = "Client-ID #{ENV['UNSPLASH_KEY']}"
       f.adapter Faraday.default_adapter
     end
