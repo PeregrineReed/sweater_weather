@@ -13,4 +13,10 @@ class User < ApplicationRecord
       user
     end
   end
+
+  def remove_favorite(city)
+    favorite = UserCity.find_by(user_id: self.id, city_id: city.id)
+    favorite.destroy
+    city
+  end
 end
