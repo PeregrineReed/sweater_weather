@@ -1,4 +1,4 @@
-class BackgroundsController < ApplicationController
+class Api::V1::BackgroundsController < ApplicationController
   def index
     render json: BackgroundsFacade.new(params[:location]).image
   end
