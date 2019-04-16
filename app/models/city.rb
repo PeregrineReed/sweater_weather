@@ -9,17 +9,21 @@ class City < ApplicationRecord
   has_many :user_cities
   has_many :users, through: :user_cities
 
-  def self.create_from_hash(data)
-    titles = data[:results][0][:address_components]
-    coordinates = data[:results][0][:geometry][:location]
-    attributes = {
-      name: titles[0][:long_name],
-      state: titles[2][:short_name],
-      country: titles[3][:short_name],
-      place_id: data[:results][0][:place_id],
-      latitude: coordinates[:lat],
-      longitude: coordinates[:lng]
-    }
-    City.create(attributes)
+  def self.find_or_create_from_geocode(location)
+    attributes = service(location).city_attributes
+    City.create(attributes) unless City.find_by(attributes)
+    City.last
+  end
+
+  def self.service(location)
+    GeocodeService.new(location)
+  end
+
+  def forecast
+    Forecast.new(self, service.forecast)
+  end
+
+  def service
+    WeatherService.new(latitude, longitude)
   end
 end
