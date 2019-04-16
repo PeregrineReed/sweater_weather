@@ -12,8 +12,9 @@ describe 'User API' do
     post '/api/v1/users', params: { user: credentials }
     results = JSON.parse(response.body, symbolize_names: true)
 
-    expect(results[:api_key]).to eq(String)
+    expect(results[:api_key]).to be_a(String)
     expect(results[:api_key].size).to eq(22)
+    expect(User.count).to eq(1)
   end
 
   it 'returns an error if email and password are invalid or taken' do
@@ -37,9 +38,6 @@ describe 'User API' do
     not_saved = {
       error: 'Something went wrong, your account could not be created with those credentials.'
     }
-    invalid = {
-      error: 'Invalid email or password.'
-    }
 
     post '/api/v1/users', params: { user: taken_credentials }
 
@@ -48,10 +46,10 @@ describe 'User API' do
 
     post '/api/v1/users', params: { user: invalid_username }
     results = JSON.parse(response.body, symbolize_names: true)
-    expect(results).to eq(invalid)
+    expect(results).to eq(not_saved)
 
     post '/api/v1/users', params: { user: invalid_password }
     results = JSON.parse(response.body, symbolize_names: true)
-    expect(results).to eq(invalid)
+    expect(results).to eq(not_saved)
   end
 end

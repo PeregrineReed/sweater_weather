@@ -9,4 +9,21 @@ describe User, type: :model do
   end
   describe 'Relationships' do
   end
+  describe 'Class Methods' do
+    it '::create_if_valid(params)' do
+      yes = {
+        email: 'email@valid.com',
+        password: 'password'
+      }
+      no = {
+        email: 'email@invalid.com',
+        password: nil
+      }
+      User.create_if_valid(yes)
+      User.create_if_valid(no)
+
+      expect(User.count).to eq(1)
+      expect(User.last.email).to eq('email@valid.com')
+    end
+  end
 end
