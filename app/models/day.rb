@@ -18,4 +18,8 @@ class Day
     @precip_percent = data[:precipProbability]
     @precip_type = data[:precipType]
   end
+
+  def cache_key
+    "hour/#{id}-#{time}"
+  end
 end

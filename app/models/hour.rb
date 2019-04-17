@@ -12,4 +12,8 @@ class Hour
     @icon = data[:icon]
     @summary = data[:summary]
   end
+
+  def cache_key
+    "hour/#{id}-#{time}"
+  end
 end
