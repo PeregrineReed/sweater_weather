@@ -7,7 +7,10 @@ require 'pry'
 require 'simplecov'
 require './spec/support/factory_bot'
 # Add additional requires below this line. Rails is not loaded until this point!
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' do
+  add_filter 'app/channels'
+  add_filter 'app/mailers'
+end
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

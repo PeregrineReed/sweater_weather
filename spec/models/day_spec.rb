@@ -81,4 +81,12 @@ describe 'Daily' do
       expect(@day.summary).to eq('Mostly cloudy throughout the day.')
     end
   end
+
+  describe 'serializer' do
+    it 'returns a serialized hash' do
+      serializer = DailySerializer.new(@day)
+      expect(serializer).to be_a(DailySerializer)
+      expect(serializer.to_hash[:data][:type]).to eq(:daily)
+    end
+  end
 end

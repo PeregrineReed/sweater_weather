@@ -4,7 +4,7 @@ describe 'Background' do
   before :each do
     @file = File.read('./fixtures/background.json')
     @data = JSON.parse(@file, symbolize_names: true)
-    @background = Background.new(@data)
+    @background = Background.new('denver,co')
   end
 
   it 'exists' do
