@@ -49,4 +49,12 @@ describe 'Hour' do
       expect(@hour.summary).to eq('Mostly Cloudy')
     end
   end
+
+  describe 'serializer' do
+    it 'returns a serialized hash' do
+      serializer = HourlySerializer.new(@hour)
+      expect(serializer).to be_a(HourlySerializer)
+      expect(serializer.to_hash[:data][:type]).to eq(:hourly)
+    end
+  end
 end

@@ -1,13 +1,30 @@
 class Background
-  attr_reader :id,
-              :url,
-              :description,
-              :alt_description
 
-  def initialize(data)
-    @id = data[:results][0][:id]
-    @url = data[:results][0][:urls][:raw]
-    @description = data[:results][0][:description]
-    @alt_description = data[:results][0][:alt_description]
+  def initialize(location)
+    @location = location
   end
+
+  def service
+    Rails.cache.fetch("background-service-#{@location}", expires_in: 1.week) {
+      BackgroundsService.new(@location)
+    }
+  end
+
+  def id
+    service.landscape[:results][0][:id]
+  end
+
+  def url
+    service.landscape[:results][0][:urls][:raw]
+  end
+
+  def description
+    service.landscape[:results][0][:description]
+  end
+
+  def alt_description
+    service.landscape[:results][0][:alt_description]
+  end
+
+
 end

@@ -16,14 +16,20 @@ class City < ApplicationRecord
   end
 
   def self.service(location)
-    GeocodeService.new(location)
+    Rails.cache.fetch("geocode-service-#{location}") {
+      GeocodeService.new(location)
+    }
   end
 
   def forecast
-    Forecast.new(self, service.forecast)
+    Rails.cache.fetch("forecast-#{latitude},#{longitude}") {
+      Forecast.new(self, service.forecast)
+    }
   end
 
   def service
-    WeatherService.new(latitude, longitude)
+    Rails.cache.fetch("weather-service-#{latitude},#{longitude}") {
+      WeatherService.new(latitude, longitude)
+    }
   end
 end

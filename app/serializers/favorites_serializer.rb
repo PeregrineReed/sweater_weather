@@ -1,6 +1,7 @@
 class FavoritesSerializer
   include FastJsonapi::ObjectSerializer
   attribute :cities do |user|
+    
     user.cities.map do |city|
       {
         location: "#{city.name}, #{city.state}, #{city.country}",

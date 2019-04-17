@@ -18,8 +18,8 @@ class Api::V1::FavoritesController < Api::V1::BaseController
   def destroy
     user = find_user
     city = find_city
-    user.remove_favorite(city)
     if user && city
+      user.remove_favorite(city)
       render json: CitySerializer.new(city)
     else
       head 401

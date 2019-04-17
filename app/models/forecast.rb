@@ -43,4 +43,8 @@ class Forecast
     @low = @daily[0].low
   end
 
+  def cache_key
+    "forecast/#{id}-#{time}"
+  end
+
 end
