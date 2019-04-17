@@ -13,6 +13,8 @@ class Forecast
               :visibility,
               :uv_index,
               :cloud_cover,
+              :hourly,
+              :daily,
               :high,
               :low
 
@@ -31,22 +33,14 @@ class Forecast
     @visibility = weather[:currently][:visibility]
     @uv_index = weather[:currently][:uvIndex]
     @cloud_cover = weather[:currently][:cloudCover]
-    @hourly = weather[:hourly][:data]
-    @daily = weather[:daily][:data]
-    @high = weather[:daily][:data][0][:temperatureMax]
-    @low = weather[:daily][:data][0][:temperatureMin]
-  end
-
-  def hourly
-    @hourly[0..7].map do |hour|
+    @hourly = weather[:hourly][:data][0..7].map do |hour|
       Hour.new(@id, hour)
     end
-  end
-
-  def daily
-    @daily[0..6].map do |day|
+    @daily = weather[:daily][:data][0..6].map do |day|
       Day.new(@id, day)
     end
+    @high = weather[:daily][:data][0][:temperatureMax]
+    @low = weather[:daily][:data][0][:temperatureMin]
   end
 
   def cache_key
