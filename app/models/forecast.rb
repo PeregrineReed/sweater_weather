@@ -19,7 +19,7 @@ class Forecast
               :low
 
   def initialize(city, forecast)
-    @id = city.id
+    @id = city.place_id
     @city = city.name
     @state = city.state
     @country = city.country
