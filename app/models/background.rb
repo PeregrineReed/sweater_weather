@@ -1,7 +1,15 @@
 class Background
+  attr_reader :id,
+              :url,
+              :description,
+              :alt_description
 
   def initialize(location)
     @location = location
+    @id = service.landscape[:results][0][:id]
+    @url = service.landscape[:results][0][:urls][:raw]
+    @description = service.landscape[:results][0][:description]
+    @alt_description = service.landscape[:results][0][:alt_description]
   end
 
   def service
@@ -9,22 +17,4 @@ class Background
       BackgroundsService.new(@location)
     }
   end
-
-  def id
-    service.landscape[:results][0][:id]
-  end
-
-  def url
-    service.landscape[:results][0][:urls][:raw]
-  end
-
-  def description
-    service.landscape[:results][0][:description]
-  end
-
-  def alt_description
-    service.landscape[:results][0][:alt_description]
-  end
-
-
 end
