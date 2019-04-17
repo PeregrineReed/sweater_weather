@@ -1,7 +1,7 @@
 class ForecastSerializer
   include FastJsonapi::ObjectSerializer
   cache_options enabled: true,
-  cache_length: 1.hour
+  cache_length: 1.minute
 
   attributes :id,
              :city,
